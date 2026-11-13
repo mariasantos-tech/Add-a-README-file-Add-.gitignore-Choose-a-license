@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: chegada-onboarding-rh
+    runtime: docker
+    plan: 0.5c-512mb
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    autoDeployTrigger: commit
+    healthCheckPath: /healthz
+    numInstances: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 10000
+      - key: ADMIN_USER
+        value: rh
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-6-luna
+      - key: ALLOW_INSECURE_ADMIN
+        value: "false"
+      - key: DATA_FILE
+        value: /app/runtime/store.json
+      - key: SECRET_FILE
+        value: /app/runtime/link-secret.key
+      - key: QUESTION_BANK_FILE
+        value: /app/data/banco_acompanhamento.json
+    disk:
+      name: chegada-runtime
+      mountPath: /app/runtime
+      sizeGB: 1
