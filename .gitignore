@@ -1,0 +1,7 @@
+.env
+*.csv
+*.xls
+*.xlsx
+*.xlsm
+runtime/
+node_modules/
